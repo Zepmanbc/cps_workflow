@@ -32,9 +32,9 @@ jobs:
           pip install pytest
           pip install pytest-cov
           pytest tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
-      - name: push to coveralls
-        run: |
-          coverage run --source=creopyson setup.py test
-          coveralls
+      - name: Coverage
+        run: coverage run --source=creopyson setup.py test
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
         with:
-          github-token: ${{ secrets.COVERALLS_TOKEN }}
+          github-token: ${{ secrets.COVERALLS_TOKEN }
