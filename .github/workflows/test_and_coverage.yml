@@ -54,6 +54,8 @@ jobs:
         run: |
           pip install pytest pytest-cov
           python -m pytest --cov-report xml
+          coveralls --output=coverage.xml
+          coveralls-lcov -v -n coverage.info > coverage.xml
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
