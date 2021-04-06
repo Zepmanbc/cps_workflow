@@ -2,10 +2,10 @@ bumpversion==0.6.*
 flake8==3.*
 tox==3.*
 Sphinx==3.5.*
-coveralls
-coverage
+coveralls==3.*
+coverage==5.5.*
 pytest==6.*
 pytest-cov==2.*
 pytest-runner==4.4
-wheel
-twine
+wheel==0.36.*
+twine==3.4.*
