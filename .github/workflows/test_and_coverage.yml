@@ -29,40 +29,8 @@ jobs:
         run: tox -e py
           echo Add other actions to build,
           echo test, and deploy your project.
-      # - name: Coverage
-      #   run: |
-      #     pip install -U pytest pytest-cov
-      #     python -m pytest --cov-report xml
-      # - name: Coveralls
-      #   uses: coverallsapp/github-action@master
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     path-to-lcov: coverage.xml
       - name: install coverages stuffs
         run: |
           pip install -U coveralls coverage pytest pytest-cov
           coverage run --source=creopyson setup.py test
           coveralls
-      # - name: Coveralls
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: |
-      #     coveralls
-      # - name: Test with pytest
-      #   run: |
-      #     pytest
-      # - name: Coveralls
-      #   uses: coverallsapp/github-action@master
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      # - name: Test with pytest
-      #   run: |
-      #     pip install pytest pytest-cov
-      #     python -m pytest --cov-report xml
-      #     coveralls --output=coverage.xml
-      #     coveralls-lcov -v -n coverage.info > coverage.xml
-      # - name: Coveralls
-      #   uses: coverallsapp/github-action@master
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     path-to-lcov: coverage.xml
