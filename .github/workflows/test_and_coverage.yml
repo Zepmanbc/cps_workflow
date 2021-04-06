@@ -23,7 +23,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements_dev.txt
       - name: Run Tox
-        # Run tox using the version of Python in `PATH`
         run: tox -e py
           echo Add other actions to build,
           echo test, and deploy your project.
@@ -39,6 +38,7 @@ jobs:
       TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
     needs: build
     steps:
+      - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
