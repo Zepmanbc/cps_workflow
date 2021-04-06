@@ -29,10 +29,10 @@ jobs:
           echo test, and deploy your project.
       - name: Coverage
         run: |
-          coverage run --source=creopyson setup.py test
-          coverage report -m
+          pip install pytest-cov
+          python -m pytest --cov-report xml
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.COVERALLS_TOKEN }}
-          path-to-lcov: .coverage
+          path-to-lcov: coverage.xml
