@@ -29,7 +29,7 @@ jobs:
           echo test, and deploy your project.
       - name: Coverage
         run: |
-          pip install pytest-cov
+          pip install -U pytest pytest-cov
           python -m pytest --cov-report xml
       - name: Coveralls
         uses: coverallsapp/github-action@master
