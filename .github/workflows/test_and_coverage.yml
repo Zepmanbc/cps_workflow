@@ -35,4 +35,4 @@ jobs:
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.COVERALLS_TOKEN }}
-          path--to-lcov: .coverage
+          path-to-lcov: .coverage
