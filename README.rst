@@ -2,6 +2,8 @@
 Creopyson
 =========
 
+.. image:: https://github.com/Zepmanbc/cps_workflow/actions/workflows/test_and_coverage/badge.svg
+        :target: https://github.com/Zepmanbc/cps_workflow/actions/workflows/test_and_coverage.yml
 
 .. image:: https://img.shields.io/pypi/v/creopyson.svg
         :target: https://pypi.python.org/pypi/creopyson
