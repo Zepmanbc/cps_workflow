@@ -27,12 +27,17 @@ jobs:
         run: tox -e py
           echo Add other actions to build,
           echo test, and deploy your project.
-      - name: Coverage
-        run: |
-          pip install -U pytest pytest-cov
-          python -m pytest --cov-report xml
+      # - name: Coverage
+      #   run: |
+      #     pip install -U pytest pytest-cov
+      #     python -m pytest --cov-report xml
+      # - name: Coveralls
+      #   uses: coverallsapp/github-action@master
+      #   with:
+      #     github-token: ${{ secrets.COVERALLS_TOKEN }}
+      #     path-to-lcov: coverage.xml
       - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.COVERALLS_TOKEN }}
-          path-to-lcov: coverage.xml
+        env:
+          GITHUB_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+        run: |
+          coveralls
