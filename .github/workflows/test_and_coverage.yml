@@ -49,7 +49,6 @@ jobs:
           pip install setuptools wheel twine
       - name: Build and publish
         run: |
-          ls
           python setup.py sdist
           python setup.py bdist_wheel
           twine upload --repository testpypi dist/*
