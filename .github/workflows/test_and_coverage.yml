@@ -8,6 +8,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env: GITHUB_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     strategy:
       matrix:
         python: [3.7, 3.8, 3.9]
@@ -37,7 +38,6 @@ jobs:
       #     github-token: ${{ secrets.GITHUB_TOKEN }}
       #     path-to-lcov: coverage.xml
       - name: install coverages stuffs
-        env: GITHUB_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: |
           pip install -U coveralls coverage pytest pytest-cov
           coverage run --source=creopyson setup.py test
