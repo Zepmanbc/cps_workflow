@@ -27,9 +27,8 @@ jobs:
         run: tox -e py
           echo Add other actions to build,
           echo test, and deploy your project.
-      - name: Coverage
-        run: coverage run --source=creopyson setup.py test
       - name: Coveralls
+        run: coverage run --source=creopyson setup.py test
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.COVERALLS_TOKEN }}
