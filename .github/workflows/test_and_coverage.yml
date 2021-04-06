@@ -43,6 +43,9 @@ jobs:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #   run: |
       #     coveralls
+      - name: Test with pytest
+        run: |
+          pytest
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
