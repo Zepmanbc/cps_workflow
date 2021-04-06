@@ -47,6 +47,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/Zepmanbc/creopyson",
-    0.8.0,
+    version="0.8.0",
     zip_safe=False,
 )
