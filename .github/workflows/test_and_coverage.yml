@@ -36,6 +36,8 @@ jobs:
       #   with:
       #     github-token: ${{ secrets.COVERALLS_TOKEN }}
       #     path-to-lcov: coverage.xml
+      - name: install coverages stuffs
+        run: pip install -U coveralls, coverage, pytest, pytest-cov
       - name: Coveralls
         env:
           GITHUB_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
