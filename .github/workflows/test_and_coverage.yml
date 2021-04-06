@@ -25,7 +25,3 @@ jobs:
         run: tox -e py
           echo Add other actions to build,
           echo test, and deploy your project.
-      - name: Coverage
-        run: |
-          coverage run --source=creopyson setup.py test
-          coveralls
