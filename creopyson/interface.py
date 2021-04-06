@@ -6,7 +6,6 @@ Import/Export program (pls, als)
 
 """
 import re
-# TODO : add STL export
 
 
 def export_3dpdf(
@@ -17,7 +16,8 @@ def export_3dpdf(
     height=None,
     width=None,
     dpi=None,
-    use_drawing_settings=None
+    use_drawing_settings=None,
+    sheet_range="all",
 ):
     """Export a model to a 3D PDF file.
 
@@ -42,6 +42,9 @@ def export_3dpdf(
         use_drawing_settings (boolean, optional):
             Whether to use special settings for exporting drawings.
             Defaut is False.
+        sheet_range (string):
+            Range of drawing sheets to export. Default vale is "all".
+            Valid values: "all", "current", range of sheet numbers (ex: "1,3-4")
 
     Returns:
         dict:
@@ -49,12 +52,12 @@ def export_3dpdf(
             filename (str): Name of the output file
 
     """
-    data = {}
+    data = {"sheet_range": sheet_range}
     if file_ is not None:
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if filename:
         data["filename"] = filename
@@ -78,7 +81,7 @@ def export_file(
     filename=None,
     dirname=None,
     geom_flags=None,
-    advanced=None
+    advanced=None,
 ):
     """Export a model to a file.
 
@@ -125,7 +128,7 @@ def export_file(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if filename:
         data["filename"] = filename
@@ -146,7 +149,7 @@ def export_image(
     height=None,
     width=None,
     dpi=None,
-    depth=None
+    depth=None,
 ):
     """Export a model to an image file.
 
@@ -167,8 +170,10 @@ def export_image(
             Image width. Defaults is `10.0`.
         dpi (int, optional):
             Image DPI. Defaults is `100`.
+            Valid values: 100, 200, 300, 400.
         depth (int, optional):
             Image depth. Defaults is `24`.
+            Valid values: 8, 24.
 
     Returns:
         dict:
@@ -181,7 +186,7 @@ def export_image(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if filename:
         data["filename"] = filename
@@ -206,7 +211,8 @@ def export_pdf(
     height=None,
     width=None,
     dpi=None,
-    use_drawing_settings=None
+    use_drawing_settings=None,
+    sheet_range="all",
 ):
     """Export a model to a PDF file.
 
@@ -234,6 +240,9 @@ def export_pdf(
         use_drawing_settings (boolean, optional):
             Whether to use special settings for exporting drawings.
             Defaut is False.
+        sheet_range (string):
+            Range of drawing sheets to export. Default vale is "all".
+            Valid values: "all", "current", range of sheet numbers (ex: "1,3-4")
 
     Returns:
         dict:
@@ -241,12 +250,12 @@ def export_pdf(
             filename (str): Name of the output file
 
     """
-    data = {}
+    data = {"sheet_range": sheet_range}
     if file_ is not None:
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if filename:
         data["filename"] = filename
@@ -283,18 +292,13 @@ def export_program(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("interface", "export_program", data)
 
 
 def import_file(
-    client,
-    filename,
-    file_type=None,
-    dirname=None,
-    new_name=None,
-    new_model_type="asm"
+    client, filename, file_type=None, dirname=None, new_name=None, new_model_type="asm"
 ):
     """Import a file as a model.
 
@@ -316,7 +320,7 @@ def import_file(
             *.igs*|*.iges* => IGES
             *.stp*|*.step* => STEP
             *.neu* => NEUTRAL
-            *.pv* => PV
+            *.pvz* => PV
         dirname (str, optional):
             Source directory.
             Defaults is Creo's current working directory.
@@ -334,10 +338,7 @@ def import_file(
         str: Name of the model imported
 
     """
-    data = {
-        "filename": filename,
-        "new_model_type": new_model_type
-    }
+    data = {"filename": filename, "new_model_type": new_model_type}
 
     if file_type is None:
         if re.search(r".*\.(igs|iges).*", filename):
@@ -346,10 +347,12 @@ def import_file(
             data["type"] = "STEP"
         elif re.search(r".*\.(neu).*", filename):
             data["type"] = "NEUTRAL"
-        elif re.search(r".*\.(pv).*", filename):
+        elif re.search(r".*\.(pvz).*", filename):
             data["type"] = "PV"
         else:
-            raise TypeError(f"`{filename}` extension was not recognized, fill in file_type.")
+            raise TypeError(
+                f"`{filename}` extension was not recognized, fill in file_type."
+            )
     else:
         data["type"] = file_type
 
@@ -387,7 +390,7 @@ def import_program(client, file_=None, filename=None, dirname=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if filename:
         data["filename"] = filename
@@ -396,7 +399,7 @@ def import_program(client, file_=None, filename=None, dirname=None):
     return client._creoson_post("interface", "import_program", data, "file")
 
 
-def mapkey(client, script):
+def mapkey(client, script, delay=0):
     """Run a Mapkey script in Creo.
 
     Make sure to remove any `mapkey(continued)` clauses from the script
@@ -404,13 +407,18 @@ def mapkey(client, script):
     after the semicolon at the end of the previous line.
 
     Args:
-        client (obj): creopyson Client.
-        script (str): The mapkey script to run.
+        client (obj):
+            creopyson Client.
+        script (str):
+            The mapkey script to run.
+        delay (int):
+            Amount of time to wait after starting the mapkey, in milliseconds.
+            Default is 0.
 
     Returns: None
 
     """
-    data = {"script": script}
+    data = {"script": script.replace("  ", ""), "delay": delay}
     return client._creoson_post("interface", "mapkey", data)
 
 
@@ -441,7 +449,7 @@ def plot(client, file_=None, dirname=None, driver=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if dirname:
         data["dirname"] = dirname
