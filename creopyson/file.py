@@ -14,7 +14,7 @@ def assemble(
     package_assembly=None,
     walk_children=None,
     assemble_to_root=None,
-    suppress=None
+    suppress=None,
 ):
     """Assemble a component into an assembly.
 
@@ -120,7 +120,7 @@ def backup(client, target_dir, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "backup", data)
 
@@ -143,7 +143,7 @@ def close_window(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "close_window", data)
 
@@ -169,7 +169,7 @@ def delete_material(client, material, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "delete_material", data)
 
@@ -189,10 +189,7 @@ def display(client, file_, activate=None):
         None
 
     """
-    data = {
-        "file": file_,
-        "activate": True
-    }
+    data = {"file": file_, "activate": True}
     if activate is not None:
         data["activate"] = activate
     return client._creoson_post("file", "display", data)
@@ -254,6 +251,36 @@ def exists(client, file_):
     return client._creoson_post("file", "exists", data, "exists")
 
 
+def get_accuracy(client, file_=None):
+    """Get a solid's accuracy.
+
+    If the model has no accuracy value, this function will return null.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        `file_` (str, optional):
+            File name.
+            Defaults is current active model
+
+    Returns:
+        (list):
+            accuracy (float):
+                Accuracy value.
+            relative (bool):
+                True = relative; False = absolute accuracy.
+
+    """
+    data = {}
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file:
+            data["file"] = active_file["file"]
+    return client._creoson_post("file", "get_accuracy", data)
+
+
 def get_active(client):
     """Get the active model from Creo.
 
@@ -294,16 +321,12 @@ def get_cur_material(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "get_cur_material", data, "material")
 
 
-def get_cur_material_wildcard(
-    client,
-    file_=None,
-    include_non_matching_parts=False
-):
+def get_cur_material_wildcard(client, file_=None, include_non_matching_parts=False):
     """Get the current material for a part or parts.
 
     Note: This is the same as 'get_cur_material' but this function allows
@@ -329,16 +352,11 @@ def get_cur_material_wildcard(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if include_non_matching_parts:
         data["include_non_matching_parts"] = True
-    return client._creoson_post(
-        "file",
-        "get_cur_material_wildcard",
-        data,
-        "materials"
-    )
+    return client._creoson_post("file", "get_cur_material_wildcard", data, "materials")
 
 
 def get_fileinfo(client, file_=None):
@@ -366,7 +384,7 @@ def get_fileinfo(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "get_fileinfo", data)
 
@@ -389,7 +407,7 @@ def get_length_units(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "get_length_units", data, "units")
 
@@ -412,7 +430,7 @@ def get_mass_units(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "get_mass_units", data, "units")
 
@@ -444,7 +462,7 @@ def get_transform(client, asm=None, path=None, csys=None):
         data["path"] = path
     if csys:
         data["csys"] = csys
-    return client._creoson_post("file", "get_transform", data, "transform")
+    return client._creoson_post("file", "get_transform", data)
 
 
 def has_instances(client, file_=None):
@@ -465,7 +483,7 @@ def has_instances(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "has_instances", data, "exists")
 
@@ -528,7 +546,7 @@ def list_instances(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "list_instances", data)
 
@@ -555,7 +573,7 @@ def list_materials(client, file_=None, material=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if material:
         data["material"] = material
@@ -563,10 +581,7 @@ def list_materials(client, file_=None, material=None):
 
 
 def list_materials_wildcard(
-    client,
-    file_=None,
-    material=None,
-    include_non_matching_parts=False
+    client, file_=None, material=None, include_non_matching_parts=False
 ):
     """List materials on a part or parts.
 
@@ -594,18 +609,13 @@ def list_materials_wildcard(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if material:
         data["material"] = material
     if include_non_matching_parts:
         data["include_non_matching_parts"] = True
-    return client._creoson_post(
-        "file",
-        "list_materials_wildcard",
-        data,
-        "materials"
-    )
+    return client._creoson_post("file", "list_materials_wildcard", data, "materials")
 
 
 def list_simp_reps(client, file_=None, rep=None):
@@ -631,7 +641,7 @@ def list_simp_reps(client, file_=None, rep=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if rep:
         data["rep"] = rep
@@ -663,15 +673,12 @@ def load_material_file(client, material, dirname=None, file_=None):
             List of files impacted.
 
     """
-    data = {
-        "dirname": dirname,
-        "material": material
-    }
+    data = {"dirname": dirname, "material": material}
     if file_ is not None:
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "load_material_file", data, "files")
 
@@ -716,7 +723,7 @@ def massprops(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "massprops", data)
 
@@ -729,7 +736,7 @@ def open_(
     display=None,
     activate=None,
     new_window=None,
-    regen_force=None
+    regen_force=None,
 ):
     """Open one or more files in memory or from the drive.
 
@@ -809,7 +816,7 @@ def open_errors(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "open_errors", data, "errors")
 
@@ -832,10 +839,9 @@ def postregen_relations_get(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
-    return client._creoson_post(
-        "file", "postregen_relations_get", data, "relations")
+    return client._creoson_post("file", "postregen_relations_get", data, "relations")
 
 
 def postregen_relations_set(client, file_=None, relations=None):
@@ -859,7 +865,7 @@ def postregen_relations_set(client, file_=None, relations=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if relations:
         data["relations"] = relations
@@ -884,7 +890,7 @@ def refresh(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "refresh", data)
 
@@ -913,7 +919,7 @@ def regenerate(client, file_=None, display=None):
             data["files"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if display:
         data["display"] = display
@@ -938,7 +944,7 @@ def relations_get(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "relations_get", data, "relations")
 
@@ -964,7 +970,7 @@ def relations_set(client, file_=None, relations=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if relations:
         data["relations"] = relations
@@ -988,15 +994,12 @@ def rename(client, new_name, file_=None, onlysession=None):
         (str): The new model name.
 
     """
-    data = {
-        "new_name": new_name,
-        "onlysession": False
-    }
+    data = {"new_name": new_name, "onlysession": False}
     if file_ is not None:
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if onlysession:
         data["onlysession"] = onlysession
@@ -1021,7 +1024,7 @@ def repaint(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "repaint", data)
 
@@ -1048,7 +1051,7 @@ def save(client, file_=None):
             data["files"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "save", data)
 
@@ -1070,14 +1073,12 @@ def set_cur_material(client, material, file_=None):
             list of impacted files.
 
     """
-    data = {
-        "material": material
-    }
+    data = {"material": material}
     if file_ is not None:
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("file", "set_cur_material", data, "files")
 
@@ -1113,7 +1114,7 @@ def set_length_units(client, units, file_=None, convert=None):
             data["files"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if convert:
         data["convert"] = convert
@@ -1151,7 +1152,7 @@ def set_mass_units(client, units, file_=None, convert=None):
             data["files"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if convert:
         data["convert"] = convert

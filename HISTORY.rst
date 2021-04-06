@@ -2,6 +2,112 @@
 History
 =======
 
+0.7.2 (2021-04-01)
+------------------
+
+* change python_requires to ">=3.7"
+
+0.7.1 (2021-03-23)
+------------------
+
+* BugFix:
+    * `file_get_active` returns `{}` instead of `None` with Creoson 2.8.0
+
+0.7.0 (2021-03-22)
+------------------
+
+Update for `Creoson 2.8.0 release`_.
+
+* New functions:
+    * creo_set_creo_version (prevent Creo 7 problems)
+    * feature_list_selected
+* Add parameters:
+    * feature_set_param: description
+    * parameter_set: description
+* Documentation update:
+    * drawing_list: add *view_model*, *simp_rep* in Return
+    * feature_list_param: add *description* in Return
+    * feature_user_select_csys: add *file*, remove "feat_number* in Return object.
+    * parameter_list: add *description* in Return
+* BugFix:
+    file_set_cur_material: now working with Creoson >2.8.0
+
+.. _`Creoson 2.8.0 release`: https://github.com/SimplifiedLogic/creoson/releases/tag/v2.8.0
+
+0.6.2 (2021-02-17)
+------------------
+
+Bugfix:
+
+* drawing.get_cur_model: correction data_key (`issue#27`_)
+
+.. _`issue#27`: https://github.com/Zepmanbc/creopyson/issues/27
+
+0.6.1 (2021-01-30)
+------------------
+
+Bugfix:
+
+* familytable.list_tree: correction data_key (`issue#21`_)
+
+Documentation update:
+
+* Usage: Add vanilla Creoson
+* Usage: Add logging
+* Issues template: add Creo version
+
+
+.. _`issue#21`: https://github.com/Zepmanbc/creopyson/issues/21
+
+0.6.0 (2020-07-16)
+------------------
+
+Update for `Creoson 2.7.0 release`_.
+
+* New functions:
+    * file_get_accuracy
+* Add parameters:
+    * interface_mapkey: delay
+    * interface_export_pdf interface_export_pdf3d : sheet_range
+
+.. _`Creoson 2.7.0 release`: https://github.com/SimplifiedLogic/creoson/releases/tag/v2.7.0
+
+0.5.2 (2020-07-09)
+------------------
+
+Documentation update
+
+* usage: path slashes correction
+
+Docstring correction
+
+* drawing_list_models : correction (`issue#18`_)
+
+Bugfix
+
+* file_get_transform : Does not return *transform* key (`issue#17`_)
+
+.. _`issue#18`: https://github.com/Zepmanbc/creopyson/issues/18
+.. _`issue#17`: https://github.com/Zepmanbc/creopyson/issues/17
+
+
+0.5.1 (2020-05-19)
+------------------
+
+Docstring updates:
+
+* interface_import_file: PV extension correction.
+* interface_export_image: add infos about valid values in docstrings for dpi and depth.
+
+Features updates:
+
+* interface_mapkey: remove extra white space in script string.
+* connection_start_creo: add use_desktop param.
+
+New Feature:
+
+* Add **logging DEBUG** on request & response.
+
 0.5.0 (2020-03-08)
 ------------------
 
