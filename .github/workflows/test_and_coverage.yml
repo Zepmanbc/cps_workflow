@@ -40,6 +40,9 @@ jobs:
         run: |
           pip install -U coveralls coverage pytest pytest-cov
           coverage run --source=creopyson setup.py test
+          coveralls
+        with:
+          github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
       # - name: Coveralls
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -58,8 +61,8 @@ jobs:
       #     python -m pytest --cov-report xml
       #     coveralls --output=coverage.xml
       #     coveralls-lcov -v -n coverage.info > coverage.xml
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: coverage.xml
+      # - name: Coveralls
+      #   uses: coverallsapp/github-action@master
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     path-to-lcov: coverage.xml
