@@ -37,6 +37,7 @@ jobs:
       #     github-token: ${{ secrets.GITHUB_TOKEN }}
       #     path-to-lcov: coverage.xml
       - name: install coverages stuffs
+        env: GITHUB_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: |
           pip install -U coveralls coverage pytest pytest-cov
           coverage run --source=creopyson setup.py test
