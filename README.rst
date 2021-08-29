@@ -8,8 +8,8 @@ Creopyson
 .. image:: https://github.com/Zepmanbc/cps_workflow/actions/workflows/release.yml/badge.svg
         :target: https://github.com/Zepmanbc/cps_workflow/actions/workflows/release.yml
 
-.. image:: https://coveralls.io/repos/github/Zepmanbc/creopyson/badge.svg?branch=master
-        :target: https://coveralls.io/github/Zepmanbc/creopyson?branch=master
+.. image:: https://coveralls.io/repos/github/Zepmanbc/cps_workflow/badge.svg?branch=master
+        :target: https://coveralls.io/github/Zepmanbc/cps_workflow?branch=master
 
 .. image:: https://readthedocs.org/projects/creopyson/badge/?version=latest
         :target: https://creopyson.readthedocs.io/en/latest/?badge=latest
